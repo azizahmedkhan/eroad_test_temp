@@ -4,6 +4,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.TimeZoneApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.LatLng;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -78,7 +79,7 @@ public class CSVParser {
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(new FileInputStream(csvFile)))) {
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                     try {
                         LocalizedDataTime localizedDataTime = parseTimeLine(line);
                         localizedDataTime.setTimeZone(getTimeZone(localizedDataTime.getLatitude(),
