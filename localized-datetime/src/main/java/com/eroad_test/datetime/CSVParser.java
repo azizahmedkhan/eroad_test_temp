@@ -8,6 +8,7 @@ import com.google.maps.model.LatLng;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -100,7 +101,7 @@ public class CSVParser {
         }
 
     public void writeCSVFile(ArrayList<String> lines) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile))){
+        try (BufferedWriter bw = Files.newBufferedWriter(csvFile.toPath())){
 
             for (String line :lines ) {
                 bw.write(line);
